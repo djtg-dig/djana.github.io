@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <rect width="1600" height="1000" fill="#07111f"/>
+  <g opacity=".42" fill="none" stroke="#2fd8ff" stroke-width="2">
+    <path d="M85 720C230 552 355 520 520 618s277 80 410-82 314-216 555-88"/>
+    <path d="M0 372c199-93 378-93 537 0s331 90 517-8 365-104 546-18"/>
+    <path d="M208 180h220l96 96h200l82 82h258l70 70h234"/>
+    <path d="M118 842h338l72-72h192l110-110h296l94-94h238"/>
+  </g>
+  <g opacity=".72">
+    <circle cx="428" cy="180" r="7" fill="#25d6ff"/>
+    <circle cx="724" cy="276" r="7" fill="#25d6ff"/>
+    <circle cx="1064" cy="358" r="7" fill="#25d6ff"/>
+    <circle cx="456" cy="842" r="7" fill="#25d6ff"/>
+    <circle cx="830" cy="660" r="7" fill="#25d6ff"/>
+    <circle cx="1220" cy="566" r="7" fill="#25d6ff"/>
+  </g>
+  <g opacity=".16" fill="#ffffff">
+    <rect x="1090" y="160" width="300" height="190" rx="18"/>
+    <rect x="1160" y="712" width="260" height="160" rx="18"/>
+    <rect x="160" y="510" width="250" height="160" rx="18"/>
+  </g>
+</svg>
