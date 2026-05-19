@@ -1,7 +1,8 @@
 (function () {
   const components = [
     { selector: "#navbar", path: "assets/components/navbar.html" },
-    { selector: "#footer", path: "assets/components/footer.html" }
+    { selector: "#footer", path: "assets/components/footer.html" },
+    { selector: "#whatsapp", path: "assets/components/whatsapp.html" }
   ];
 
   const fallbackComponents = {
@@ -34,9 +35,9 @@
         <img class="footer-logo mb-3" src="assets/images/logo%20bluer.jpg.jpeg" alt="Djana">
         <p>Construire le futur numérique</p>
         <div>
-          <a class="social-link" href="" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="social-link" href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
           <a class="social-link" href="https://www.linkedin.com/company/djanatg/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-          <a class="social-link" href="" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a class="social-link" href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
         </div>
       </div>
       <div class="col-6 col-lg-2">
@@ -58,7 +59,7 @@
       <div class="col-lg-3">
         <h6>Contact</h6>
         <a href="mailto:djanatechnology@gmail.com">djanatechnology@gmail.com</a>
-        <a href="tel:+243891833436">+243 89 1833 436</a>
+        <a href="tel:+243819339737">+243 81 933 9737</a>
         <span>Kinshasa, RDC</span>
       </div>
     </div>
@@ -66,6 +67,11 @@
     <p class="mb-0 small">© 2026 Djana. Tous droits réservés.</p>
   </div>
 </footer>`
+,
+    "#whatsapp": `
+<a class="whatsapp-float" href="https://wa.me/243819339737?text=Bonjour%20Djana%2C%20je%20souhaite%20obtenir%20plus%20d%E2%80%99informations%20sur%20vos%20services%20num%C3%A9riques." target="_blank" rel="noopener noreferrer" aria-label="Contacter Djana sur WhatsApp">
+  <i class="bi bi-whatsapp"></i>
+</a>`
   };
 
   document.addEventListener("DOMContentLoaded", loadComponents);

@@ -90,6 +90,53 @@ const projects = [
   { category: "business", title: "Solution de gestion interne", description: "Automatisation de workflows et tableaux de bord décisionnels.", tech: "Dashboard, API, Cloud", image: "project-internal.svg" }
 ];
 
+const WHATSAPP_NUMBER = "243819339737";
+const WHATSAPP_FORM_MESSAGES = {
+  contact: {
+    intro: ["Bonjour Djana,", "Je vous contacte depuis le site web."],
+    fields: [
+      { label: "Nom", source: "Nom complet" },
+      { label: "Email", source: "Email" },
+      { label: "Téléphone", source: "Téléphone" },
+      { label: "Sujet", source: "Sujet" },
+      { label: "Message", source: "Message" }
+    ]
+  },
+  consultation: {
+    intro: ["Bonjour Djana,", "Je souhaite obtenir une consultation gratuite."],
+    fields: [
+      { label: "Nom", source: "Nom complet" },
+      { label: "Email", source: "Email" },
+      { label: "Téléphone / WhatsApp", source: "Téléphone / WhatsApp" },
+      { label: "Entreprise", source: "Nom de l’entreprise" },
+      { label: "Secteur d’activité", source: "Secteur d’activité" },
+      { label: "Type de client", source: "Type de client" },
+      { label: "Service recherché", source: "Service recherché" },
+      { label: "Description du besoin", source: "Description du besoin" },
+      { label: "Budget estimatif", source: "Budget estimatif" },
+      { label: "Délai souhaité", source: "Délai souhaité" },
+      { label: "Préférence de contact", source: "Préférence de contact" }
+    ]
+  },
+  devis: {
+    intro: ["Bonjour Djana,", "Je souhaite demander un devis."],
+    fields: [
+      { label: "Nom", source: "Nom complet" },
+      { label: "Email", source: "Email" },
+      { label: "Téléphone", source: "Téléphone" },
+      { label: "Type de projet", source: "Type de projet" },
+      { label: "Fonctionnalités souhaitées", source: "Fonctionnalités souhaitées" },
+      { label: "Nombre approximatif d’utilisateurs", source: "Nombre approximatif d’utilisateurs" },
+      { label: "Besoin d’hébergement", source: "Besoin d’hébergement" },
+      { label: "Besoin de maintenance", source: "Besoin de maintenance" },
+      { label: "Besoin de formation", source: "Besoin de formation" },
+      { label: "Budget", source: "Budget" },
+      { label: "Délai", source: "Délai" },
+      { label: "Commentaire", source: "Commentaire" }
+    ]
+  }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   setupNavbar();
   setupBackToTop();
@@ -166,14 +213,48 @@ function setupForms() {
       const status = form.querySelector(".form-status");
       const invalid = validateForm(form);
       if (invalid.length) {
-        showStatus(status, "error", "Veuillez vérifier les champs obligatoires et l’adresse email.");
+        showStatus(status, "error", "Veuillez vérifier les champs obligatoires. Renseignez aussi au moins un email ou un téléphone.");
         invalid[0].focus();
+        return;
+      }
+      if (form.dataset.whatsappForm) {
+        sendFormToWhatsApp(form, status);
         return;
       }
       form.reset();
       showStatus(status, "success", "Votre demande a bien été préparée. L’équipe Djana vous recontactera rapidement.");
     });
   });
+}
+
+function sendFormToWhatsApp(form, status) {
+  const message = buildWhatsAppMessage(form);
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  showStatus(status, "success", "WhatsApp va s’ouvrir avec votre message prérempli.");
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+function buildWhatsAppMessage(form) {
+  const config = WHATSAPP_FORM_MESSAGES[form.dataset.whatsappForm];
+  if (!config) return "";
+
+  const lines = [...config.intro, ""];
+  config.fields.forEach((field) => {
+    lines.push(`${field.label} : ${getFormValueByLabel(form, field.source)}`);
+  });
+  return lines.join("\n");
+}
+
+function getFormValueByLabel(form, labelText) {
+  const label = Array.from(form.querySelectorAll("label")).find((item) => normalizeText(item.textContent) === normalizeText(labelText));
+  if (!label) return "";
+  const field = label.nextElementSibling;
+  if (!field || !("value" in field)) return "";
+  return field.value.trim();
+}
+
+function normalizeText(value) {
+  return value.replace(/\s+/g, " ").trim();
 }
 
 function validateForm(form) {
@@ -185,7 +266,32 @@ function validateForm(form) {
     field.classList.toggle("is-invalid", !ok);
     if (!ok) invalid.push(field);
   });
+  validateContactMethod(form, invalid);
   return invalid;
+}
+
+function validateContactMethod(form, invalid) {
+  const emailField = getFieldByLabel(form, "Email");
+  const phoneField = getFieldByLabel(form, "Téléphone") || getFieldByLabel(form, "Téléphone / WhatsApp");
+  if (!emailField || !phoneField) return;
+
+  const email = emailField.value.trim();
+  const phone = phoneField.value.trim();
+  const emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const hasContact = Boolean(email || phone);
+
+  emailField.classList.toggle("is-invalid", !emailOk || !hasContact);
+  phoneField.classList.toggle("is-invalid", !hasContact);
+
+  if ((!emailOk || !hasContact) && !invalid.includes(emailField)) invalid.push(emailField);
+  if (!hasContact && !invalid.includes(phoneField)) invalid.push(phoneField);
+}
+
+function getFieldByLabel(form, labelText) {
+  const label = Array.from(form.querySelectorAll("label")).find((item) => normalizeText(item.textContent) === normalizeText(labelText));
+  if (!label) return null;
+  const field = label.nextElementSibling;
+  return field && "value" in field ? field : null;
 }
 
 function showStatus(status, type, message) {

@@ -7,9 +7,16 @@ Site vitrine statique pour Djana, construit en HTML5, CSS3, Bootstrap 5 et JavaS
 ```text
 djana-website/
   assets/
-    css/styles.css
+    components/
+      footer.html
+      navbar.html
+      whatsapp.html
+    css/
+      styles.css
     images/
-    js/main.js
+    js/
+      components.js
+      main.js
   index.html
   services.html
   service-detail.html
@@ -71,4 +78,24 @@ Les formulaires sont validés côté navigateur par `assets/js/main.js`.
 
 Pour rendre un champ obligatoire, ajoutez l’attribut `required`. Pour valider un email, utilisez `type="email"`.
 
-Les messages de succès sont simulés : aucun backend ni envoi réel n’est configuré.
+Les formulaires de contact, consultation et devis ouvrent WhatsApp avec un message prérempli. Aucun backend n’est nécessaire.
+
+## Configuration WhatsApp Direct
+
+Le numéro WhatsApp utilisé est `+243819339737`.
+
+Le format technique pour les liens `wa.me` ne doit pas contenir le signe `+` :
+
+```text
+https://wa.me/243819339737
+```
+
+Le bouton WhatsApp flottant est centralisé dans `assets/components/whatsapp.html`, puis chargé dans les pages par `assets/js/components.js`.
+
+Pour modifier le numéro plus tard, mettez à jour :
+
+- le lien dans `assets/components/whatsapp.html` ;
+- la constante `WHATSAPP_NUMBER` dans `assets/js/main.js` ;
+- le fallback `#whatsapp` dans `assets/js/components.js`.
+
+Pour modifier le message par défaut du bouton flottant, éditez le paramètre `text=` dans `assets/components/whatsapp.html` et dans le fallback `#whatsapp` de `assets/js/components.js`.
