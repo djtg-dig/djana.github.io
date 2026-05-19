@@ -103,8 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setupNavbar() {
   const navbar = document.querySelector(".navbar");
+  if (!navbar) return;
   const setState = () => navbar && navbar.classList.toggle("scrolled", window.scrollY > 12);
   setState();
+  if (navbar.dataset.scrollReady) return;
+  navbar.dataset.scrollReady = "true";
   window.addEventListener("scroll", setState, { passive: true });
 }
 
