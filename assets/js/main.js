@@ -82,8 +82,7 @@ const services = [
 ];
 
 const projects = [
-  { category: "education", title: "Djana Academy", description: "Plateforme de formation numérique orientée compétences pratiques.", tech: "HTML, CSS, JavaScript, LMS", image: "project-academy.svg" },
-  { category: "education", title: "Plateforme e-learning", description: "Parcours de cours, quiz et suivi de progression pour apprenants.", tech: "Web, UX, Analytics", image: "project-elearning.svg" },
+  { category: "education", title: "Djana Academy", description: "Plateforme e-learning complète pour formations pratiques, parcours de cours, quiz et suivi de progression des apprenants.", tech: "LMS, Web, UX, Analytics", image: "logo simply.jpg", imageMode: "logo", url: "https://www.djana-academy.com" },
   { category: "business", title: "Application de gestion", description: "Gestion des opérations, clients, stocks et rapports internes.", tech: "Web App, API, SQL", image: "project-management.svg" },
   { category: "web", title: "Site vitrine entreprise", description: "Présence digitale premium pour une entreprise de services.", tech: "HTML5, Bootstrap, SEO", image: "project-website.svg" },
   { category: "business", title: "Système de réservation", description: "Réservation, notifications et administration centralisée.", tech: "Web, Mobile, Paiement", image: "project-booking.svg" },
@@ -362,12 +361,12 @@ function renderPortfolio() {
     grid.innerHTML = visible.map((project) => `
       <div class="col-md-6 col-lg-4 reveal">
         <article class="card-clean overflow-hidden">
-          <div class="project-thumb"><img src="assets/images/${project.image}" alt="${project.title}"></div>
+          <div class="project-thumb${project.imageMode ? ` project-thumb-${project.imageMode}` : ""}"><img src="assets/images/${project.image}" alt="${project.title}"></div>
           <div class="p-4">
             <span class="section-kicker">${project.tech}</span>
             <h2 class="h5 fw-bold mt-2">${project.title}</h2>
             <p class="text-muted-custom">${project.description}</p>
-            <a href="contact.html" class="btn btn-light-blue">Voir le projet</a>
+            <a href="${project.url || "contact.html"}" class="btn btn-light-blue"${project.url ? ' target="_blank" rel="noopener noreferrer"' : ""}>Voir le projet</a>
           </div>
         </article>
       </div>
